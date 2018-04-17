@@ -1,0 +1,13 @@
+#game{
+background-image: url("https://i.pinimg.com/originals/77/d5/89/77d5892879682be6d71f83ff5eda71b4.jpg");
+background-size: 1000px 600px;
+}
+
+h1{
+  text-align: center;
+}
+
+.background{
+  background-image: url("https://i.pinimg.com/originals/77/d5/89/77d5892879682be6d71f83ff5eda71b4.jpg");
+
+}
