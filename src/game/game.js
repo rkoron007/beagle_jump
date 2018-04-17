@@ -45,7 +45,10 @@ export default class Game{
 
   draw(ctx) {
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-    this.addObstacles();
+    if (this.obstacles.length < 2){
+      this.addObstacles();
+    }
+    console.log(this.obstacles);
     this.allObjects().forEach((object) => {
       object.draw(ctx);
     });

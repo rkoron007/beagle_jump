@@ -10,7 +10,6 @@ This game will center around timing your jumps correctly to avoid obstacles.
 ### Functionality & MVP  
 
 In Beagle Jump users can:
-
 - [ ] make the Dog jump
 - [ ] see the background moving from right to left
 - [ ] reach the end goal -> resulting in a win screen
@@ -74,9 +73,15 @@ In addition to the webpack entry file, there will be four scripts involved in th
 - [x] Research how to animate a sprite in html5.
 
 **Day 1**: Setup all necessary Node modules, including getting webpack up and running.  Create `webpack.config.js` as well as `package.json`.  Write a basic entry file and the bare bones of all 4 scripts outlined above.  Goals for the day:
+<<<<<<< HEAD
 - [ ] Get `webpack` serving files and frame out index.html
 - [ ] Create or Find sprites for dog, fences and any other in game objects
 - [ ] Create game backgrounds
+=======
+- [X] Get `webpack` serving files and frame out index.html
+- [X] Create or Find sprites for dog, fences and any other in game objects
+- [X] Create game backgrounds
+>>>>>>> 5d73a72657a8b4e4c502d2cc7a4bea094f35788d
 
 **Day 2**: Create in game logic for the dog jumping. Create fence collision physics. Goals for the day:
 
