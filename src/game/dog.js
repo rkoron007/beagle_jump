@@ -1,31 +1,5 @@
 import MovingObject from "./movingobject.js";
 
-
-   // const spriteWidth = 840;
-   // const spriteHeight = 185;
-   // const row = 1;
-   // const cols = 4;
-
-   // const trackRight = 0;
-   // const spacePressed = false;
-
-   // const width = spriteWidth/cols;
-   // const height = spriteHeight/row;
-
-   // const curFrame = 0;
-   // const frameCount = 4;
-
-
-   // const x= 0;
-   // const y= 0;
-   //
-   // const srcX=0;
-   // const srcY=0;
-
-   // const up = false;
-   // const down = false;
-   //
-   // const speed = 12;
    const STEP_SPEED = 11;
    const JUMP_DISTANCE = 350;
    const JUMP_HEIGHT = 100;
@@ -33,20 +7,21 @@ import MovingObject from "./movingobject.js";
    class Dog{
      constructor(options){
        this.x= 20;
-       this.y= 350;
+       this.y= 460;
        this.srcX=0;
        this.srcY=0;
        this.trackRight = 0;
        this.rows = 1;
        this.columns= 4;
-       this.spriteWidth = 431;
-       this.spriteHeight = 93;
+       this.spriteWidth = 410;
+       this.spriteHeight = 120;
        this.width = this.spriteWidth/this.columns;
        this.height = this.spriteHeight/this.rows;
        this.curFrame = 0;
        this.frameCount = 4;
-       this.jumpStart = null;
+       this.jumpStart = false;
        this.spacePressed = false;
+       this.y_velocity = 0;
      }
    }
 
@@ -88,14 +63,30 @@ import MovingObject from "./movingobject.js";
     this.srcX = this.curFrame * this.width;
   };
 
-  Dog.prototype.draw = function(context){
-    if (this.spacePressed){
-      console.log("hey");
+  Dog.prototype.clearFloor = function(){
+    if (this.y > 460){
+      this.jumpStart = false;
+      this.y = 460;
+      this.y_velocity = 0;
     }
+  };
+
+  Dog.prototype.draw = function(context){
+
+    if (this.spacePressed && this.jumpStart === false){
+      this.y_velocity -= 160;
+      this.jumpStart = true;
+    }
+
+    this.y_velocity += 40;
+    this.y += this.y_velocity;
+    this.y_velocity *= .09;
+
+    this.clearFloor();
     this.updateFrame();
-    context.clearRect(this.x,this.y,this.width,this.height);
+
     const dogSprite = new Image();
-    dogSprite.src = "src/images/dogRunSmall.png";
+    dogSprite.src = "src/images/dogRunBig-resize.png";
     context.drawImage(dogSprite,this.srcX,this.srcY,this.width,
       this.height,this.x,this.y,this.width,this.height);
   };
