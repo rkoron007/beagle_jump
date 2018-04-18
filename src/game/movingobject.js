@@ -7,29 +7,12 @@ export default class MovingObject{
     this.width = w;
   }
 
-
-  contains(x, y){
-    if ( x >= this.x && x <= this.x + this.width &&
-      y >= this.y && y <= this.y + this.height){
-        return true;
-      } else {
-        return false;
-      }
-  }
-
   collidedWith(shape){
-    if (this.contains(shape.x, shape.y) ||
-    this.contains(shape.x + shape.width, shape.y ) ||
-    this.contains(shape.x, shape.y + shape.height) ||
-    this.contains(shape.x + shape.width, shape.y + shape.height))
-      {
+    let minheight = (this.height + shape.height) / 2;
+
+    if ((this.x > (shape.x - 40)) && ((this.y - minheight) >= 300) && (shape.x > 30)){
         return true;
-      } else if ( shape.contains(this.x, this.y) ||
-      shape.contains(this.x + this.width, this.y ) ||
-      shape.contains(this.x, this.y + this.height) ||
-      shape.contains(this.x + this.width, this.y + this.height)){
-        return true;
-      }
+      } else
       return false;
   }
 }

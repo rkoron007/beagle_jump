@@ -1,13 +1,28 @@
 #game{
-background-image: url("https://i.pinimg.com/originals/77/d5/89/77d5892879682be6d71f83ff5eda71b4.jpg");
-background-size: 1000px 600px;
+  background-image: url("https://i.pinimg.com/originals/77/d5/89/77d5892879682be6d71f83ff5eda71b4.jpg");
+  background-size: 1000px 600px;
+  display: flex;
+  justify-content: center;
+  margin-right: 500px;
 }
 
-h1{
+.gametitle{
+  font-family: 'Press Start 2P', cursive;
   text-align: center;
 }
 
-.background{
-  background-image: url("https://i.pinimg.com/originals/77/d5/89/77d5892879682be6d71f83ff5eda71b4.jpg");
+.story{
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
+  letter-spacing: .2em;
+}
 
+
+.gamemain{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
 }

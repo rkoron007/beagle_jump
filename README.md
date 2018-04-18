@@ -107,3 +107,5 @@ In addition to the webpack entry file, there will be four scripts involved in th
 ### Bonus features
 - [ ] There will be life system in game (each play through you start with 1 extra life to get to the end of the level. If you lose that extra life and then collide with something the game will be over)
 - [ ] Create in game music that is able to be muted.
+- [ ] Create in game item that makes you invincible for a shot amount time.
+- [ ] Create different kinds of obstacles (wider and smaller)

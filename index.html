@@ -2,16 +2,24 @@
  <head>
  <title>Beagle Jump!</title>
   <link rel="stylesheet" href="src/stylesheets/style.css">
-
+<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
  </head>
  <body>
-<h1>Beagle Jump!</h1>
-<canvas id="game" height="600" width="800"></canvas>
-<p>Press space bar to start</p>
+    <div class="gametitle">
+      <h1>Beagle Jump!</h1>
+    </div>
 
-<script type="text/javascript" src="lib/bundle.js">
-</script>
+    <div class="gamemain">
+      <div class="story">
+        <p>Max went out adventuring last night and got lost! He is trying to get home but all these short fences keep getting in the way. Can you help Max navigate the small fences and find his way home?!</p>
+      </div>
 
-<div class="background"></div>
+      <div class="game">
+        <canvas id="game" height="600" width="800"></canvas>
+      </div>
+    </div>
+
+  <script type="text/javascript" src="lib/bundle.js">
+  </script>
  </body>
 </html>

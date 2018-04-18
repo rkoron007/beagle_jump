@@ -1,20 +1,19 @@
 import MovingObject from "./movingobject";
 
-export default class Obstacle{
-  constructor(){
-    this.x = 500;
-    this.y = 500;
-    this.height = 600;
-    this.width = 680;
+export default class Obstacle extends MovingObject{
+  constructor(x){
+    super();
+    this.x = x + 400;
+    this.y = 470;
+    this.height = 100;
+    this.width = 100;
+    this.fenceSprite = new Image();
+    this.fenceSprite.src = "src/images/fence.png";
   }
 
   draw(ctx){
-    const fenceSprite = new Image();
-    fenceSprite.src = "src/images/fence.png";
-    ctx.drawImage(fenceSprite,this.y,this.x,this.width,
-      this.height,this.x,this.y,this.width,this.height);
+    this.x -= 15;
+    ctx.drawImage(this.fenceSprite,this.x,this.y, 110, 110);
   }
 
 }
-
-Object.setPrototypeOf(Obstacle.prototype, MovingObject);
