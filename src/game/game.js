@@ -9,8 +9,10 @@ export default class Game{
     this.finished = false;
     this.ctx = ctx;
     this.spacePressed = false;
-    this.fencesToGo = 5;
+    this.fencesToGo = Game.FENCES_TO_WIN;
     this.set = null;
+    this.frameRate = 10;
+
     this.loadCycle = this.loadCycle.bind(this);
   }
 
@@ -26,11 +28,25 @@ export default class Game{
 
   start() {
     this.finished = false;
+
+    // this.set = requestAnimationFrame(animate)
     this.set = setInterval(() => this.frame(), 80);
   }
 
+  animate(){
+    // requestAnimationFrame(animate)
+
+  }
+
+  checkObstacles(){
+    if (this.fencesToGo >= 1) {
+      if (this.obstacles.length < 3){ this.addObstacles(); }
+      this.removeObstacles();
+    }
+  }
 
   frame(){
+    //if game is finished handle
     if (this.fencesToGo <= 0){
       this.won();
       return true;
@@ -38,8 +54,7 @@ export default class Game{
         this.gameOver();
         return false;
       }
-    if (this.obstacles.length < 1){ this.addObstacles(); }
-    this.removeObstacles();
+    this.checkObstacles();
     this.checkCollisions();
     this.checkJumps();
     this.draw(this.ctx);
@@ -62,26 +77,39 @@ export default class Game{
   startSprite(){
     const startSprite = new Image();
     startSprite.onload= () => {
-      this.ctx.drawImage(startSprite, 300, 250, 200,100);
+      this.ctx.drawImage(startSprite, 300, 250, 200, 100);
     };
     startSprite.src = "src/images/start.png";
   }
 
   addObstacles() {
-    if ( this.fencesToGo <= 0){
-      return this.won();}
-    let x = Math.floor((Math.random() * 800) + 1);
-    if (x < 350){
-      x += 200;
+    //if won -> don't add obstacles
+    if ( this.fencesToGo <= 0){ return this.won();}
+    //create a random spot for the fence but make sure it's big enough
+    let x;
+
+    if (this.obstacles.length >= 1) {
+      // if have obstacle make sure they are a good distance apart
+      let y = Math.floor((Math.random() * 400) + 1) + 250;
+      x = this.obstacles[this.obstacles.length - 1].x + y;
+    } else {
+      x = Math.floor((Math.random() * 1000) + 1);
+      if (x < 850){
+        x += 250;
+      }
     }
-    this.add(new Obstacle(x));
-    this.fencesToGo -= 1;
+    //choose a random number for fence image
+    let imageNum = Math.floor((Math.random() * 7) + 1);
+    this.add(new Obstacle(x, imageNum));
   }
 
   removeObstacles() {
-    if (this.obstacles[0]){
+    //if an obstacle has gone off screen - remove
+    if (this.obstacles.length >= 3){
       if (this.obstacles[0].x < -150){
+        console.log("remove!");
         this.obstacles.shift();
+        this.fencesToGo -= 1;
       }
     }
   }
@@ -131,7 +159,7 @@ export default class Game{
       winSprite.src = "src/images/winSprite.png";
 
       this.finished = true;
-      this.fencesToGo = 5;
+      this.fencesToGo = Game.FENCES_TO_WIN;
       clearInterval(this.set);
       this.ctx.canvas.addEventListener('click', this.loadCycle);
     } else {
@@ -158,9 +186,10 @@ export default class Game{
     gameOverSprite.src = "src/images/gameover.png";
 
     this.ctx.canvas.addEventListener('click', this.loadCycle);
-    this.fencesToGo = 5;
+    this.fencesToGo = Game.FENCES_TO_WIN;
     clearInterval(this.set);
   }
+
   checkJumps(){
     if (this.spacePressed && this.dog.jumping === false) {
       this.dog.jump();
@@ -172,9 +201,6 @@ export default class Game{
 }
 
 
-
-
-
-Game.NUM_OBSTACLES = 2;
+Game.FENCES_TO_WIN = 3;
 Game.DIM_X = 800;
 Game.DIM_Y = 600;

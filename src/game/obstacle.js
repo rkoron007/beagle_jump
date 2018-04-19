@@ -1,14 +1,14 @@
 import MovingObject from "./movingobject";
 
 export default class Obstacle extends MovingObject{
-  constructor(x){
+  constructor(x, imageNum){
     super();
-    this.x = x + 400;
+    this.x = x;
     this.y = 470;
     this.height = 100;
     this.width = 100;
     this.obstacleSprite = new Image();
-    this.obstacleSprite.src = "src/images/bush.png";
+    this.obstacleSprite.src = Obstacle.OBSTACLE_IMAGES[imageNum];
   }
 
   draw(ctx){
@@ -22,8 +22,8 @@ Obstacle.OBSTACLE_IMAGES = {
   1:"src/images/shell.png",
   2:"src/images/fence.png",
   3:"src/images/fence2.png",
-  4:"src/images/cat.png",
-  5:"src/images/hurdle.png",
-  6:"src/images/fire.png",
-  7:"src/images/bush.png",
+  4:"src/images/sheep.png",
+  5:"src/images/fire.png",
+  6:"src/images/bush.png",
+  7:"src/images/fence.png",
 };

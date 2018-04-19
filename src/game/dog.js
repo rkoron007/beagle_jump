@@ -1,9 +1,5 @@
 import MovingObject from "./movingobject.js";
 
-   const STEP_SPEED = 11;
-   const JUMP_DISTANCE = 350;
-   const JUMP_HEIGHT = 100;
-
    class Dog extends MovingObject{
      constructor(options){
        super();
@@ -46,7 +42,7 @@ import MovingObject from "./movingobject.js";
       return false;
     }
 
-    this.y -= 35;
+    this.y -= 31;
     this.jumpFrame -= 1;
   };
 
