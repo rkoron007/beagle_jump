@@ -46,7 +46,7 @@ import MovingObject from "./movingobject.js";
       return false;
     }
 
-    this.y -= 30;
+    this.y -= 35;
     this.jumpFrame -= 1;
   };
 

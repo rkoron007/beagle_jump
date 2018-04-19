@@ -9,9 +9,40 @@ export default class Game{
     this.finished = false;
     this.ctx = ctx;
     this.spacePressed = false;
-    this.fencesToGo = 3;
-
+    this.fencesToGo = 5;
+    this.set = null;
     this.loadCycle = this.loadCycle.bind(this);
+  }
+
+  loadGame() {
+    this.startSprite();
+    this.ctx.canvas.addEventListener('click', this.loadCycle);
+  }
+
+  loadCycle(){
+    this.start();
+    this.ctx.canvas.removeEventListener('click', this.loadCycle);
+  }
+
+  start() {
+    this.finished = false;
+    this.set = setInterval(() => this.frame(), 80);
+  }
+
+
+  frame(){
+    if (this.fencesToGo <= 0){
+      this.won();
+      return true;
+    } else if (this.finished === true) {
+        this.gameOver();
+        return false;
+      }
+    if (this.obstacles.length < 1){ this.addObstacles(); }
+    this.removeObstacles();
+    this.checkCollisions();
+    this.checkJumps();
+    this.draw(this.ctx);
   }
 
   add(object) {
@@ -20,33 +51,38 @@ export default class Game{
     }
   }
 
+  draw(ctx) {
+    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+
+    this.allObjects().forEach((object) => {
+      object.draw(ctx);
+    });
+  }
+
+  startSprite(){
+    const startSprite = new Image();
+    startSprite.onload= () => {
+      this.ctx.drawImage(startSprite, 300, 250, 200,100);
+    };
+    startSprite.src = "src/images/start.png";
+  }
 
   addObstacles() {
     if ( this.fencesToGo <= 0){
-      return this.won();
+      return this.won();}
+    let x = Math.floor((Math.random() * 800) + 1);
+    if (x < 350){
+      x += 200;
     }
-    let y = Math.floor((Math.random() * 800) + 1);
-    if (y < 200){
-      y += 200;
-    }
-    this.add(new Obstacle(y));
+    this.add(new Obstacle(x));
     this.fencesToGo -= 1;
   }
 
   removeObstacles() {
-    if (this.obstacles[0].x < -150){
-      this.obstacles.shift();
-    }
-  }
-
-  won() {
-    if ( this.fencesToGo <= 0){
-      const houseSprite = new Image();
-      houseSprite.src = "src/images/houseSprite.png";
-      this.ctx.drawImage(houseSprite,500, 140, 500, 500);
-      return true;
-    } else {
-      return false;
+    if (this.obstacles[0]){
+      if (this.obstacles[0].x < -150){
+        this.obstacles.shift();
+      }
     }
   }
 
@@ -59,22 +95,72 @@ export default class Game{
       const obj1 = this.dog;
       const obj2 = this.obstacles[i];
       if (obj1.collidedWith(obj2)) {
-        // const collision = obj1.collideWith(obj2);
-        // if (collision) return;
+        this.obstacles = [];
+        this.finished = true;
       }
     }
   }
 
 
-  draw(ctx) {
-    ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+  won() {
+    if ( this.fencesToGo <= 0){
+      this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+      const houseSprite = new Image();
+      houseSprite.onload= () => {
+      this.ctx.drawImage(houseSprite, 500, 120, 500, 500);
+    };
 
-    this.allObjects().forEach((object) => {
-      object.draw(ctx);
-    });
+      const winDogSprite = new Image();
+      winDogSprite.onload= () => {
+      this.ctx.drawImage(winDogSprite, 20, 390, 150,150);
+      };
+
+      const winSprite = new Image();
+      winSprite.onload= () => {
+        this.ctx.drawImage(winSprite, 240, 0, 300,300);
+      };
+
+      const startSprite = new Image();
+      startSprite.onload= () => {
+        this.ctx.drawImage(startSprite, 280, 350, 200,100);
+      };
+
+      startSprite.src = "src/images/start.png";
+      winDogSprite.src = "src/images/dogWin.png";
+      houseSprite.src = "src/images/houseSprite.png";
+      winSprite.src = "src/images/winSprite.png";
+
+      this.finished = true;
+      this.fencesToGo = 5;
+      clearInterval(this.set);
+      this.ctx.canvas.addEventListener('click', this.loadCycle);
+    } else {
+      this.finished = false;
+    }
   }
 
+  gameOver(){
+    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
+    this.startSprite();
+
+    const gameOverSprite = new Image();
+    gameOverSprite.onload= () => {
+      this.ctx.drawImage(gameOverSprite, 300, 80, 200,100);
+    };
+
+    const sadDogSprite = new Image();
+    sadDogSprite.onload= () => {
+      this.ctx.drawImage(sadDogSprite, 20, 360, 200,200);
+    };
+
+    sadDogSprite.src = "src/images/dog gameover.png";
+    gameOverSprite.src = "src/images/gameover.png";
+
+    this.ctx.canvas.addEventListener('click', this.loadCycle);
+    this.fencesToGo = 5;
+    clearInterval(this.set);
+  }
   checkJumps(){
     if (this.spacePressed && this.dog.jumping === false) {
       this.dog.jump();
@@ -82,45 +168,6 @@ export default class Game{
     if (this.dog.jumping === true){
       this.dog.animateJump();
     }
-  }
-
-
-  frame(){
-    if (this.obstacles.length < 1){ this.addObstacles(); }
-    this.removeObstacles();
-    this.checkCollisions();
-    this.checkJumps();
-
-    if ( this.won() !== true){
-      this.draw(this.ctx);
-    }
-    // else if ( ){
-    //
-    // }
-    //handle game over
-  }
-
-  gameOver(){
-
-  }
-
-
-  start() {
-    setInterval(()=>this.frame(), 80);
-  }
-
-  loadCycle(){
-    this.start();
-    this.ctx.canvas.removeEventListener('click', this.loadCycle);
-  }
-
-  loadGame() {
-    const startSprite = new Image();
-    startSprite.onload= () => {
-      this.ctx.drawImage(startSprite, 300, 250, 200,100);
-    };
-    this.ctx.canvas.addEventListener('click', this.loadCycle);
-    startSprite.src = "src/images/start.png";
   }
 }
 

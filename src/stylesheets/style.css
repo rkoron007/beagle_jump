@@ -3,26 +3,38 @@
   background-size: 1000px 600px;
   display: flex;
   justify-content: center;
-  margin-right: 500px;
+}
+
+body{
+  background-color: rgba(31, 167, 235, 0.19);
 }
 
 .gametitle{
   font-family: 'Press Start 2P', cursive;
   text-align: center;
+  margin-top: 8%;
 }
-
-.story{
-  font-family: 'Press Start 2P', cursive;
-  font-size: 14px;
-  display: flex;
-  justify-content: flex-start;
-  width: 50%;
-  letter-spacing: .2em;
-}
-
 
 .gamemain{
   display: flex;
   width: 100%;
-  justify-content: space-evenly;
+  margin-top: 1em;
+  justify-content: center;
+}
+
+.story{
+  font-family: 'Press Start 2P', cursive;
+  width: 200px;
+  line-height: 2;
+  margin-right: 1%;
+}
+
+.navlinks{
+  padding: 10px;
+  margin-left: 1%;
+}
+
+a{
+  padding: 10px;
+  margin-right: 10%;
 }
