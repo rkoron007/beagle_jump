@@ -28,21 +28,17 @@ export default class Game{
 
   start() {
     this.finished = false;
-
-    // this.set = requestAnimationFrame(animate)
     this.set = setInterval(() => this.frame(), 80);
   }
 
-  animate(){
-    // requestAnimationFrame(animate)
-
-  }
 
   checkObstacles(){
-    if (this.fencesToGo >= 1) {
-      if (this.obstacles.length < 3){ this.addObstacles(); }
+    if (this.fencesToGo === 1) {
       this.removeObstacles();
-    }
+      return this.bringUpHouse();
+    } else if (this.obstacles.length < 3 && this.fencesToGo > 1)
+      { this.addObstacles(); }
+      this.removeObstacles();
   }
 
   frame(){
@@ -95,7 +91,7 @@ export default class Game{
     } else {
       x = Math.floor((Math.random() * 1000) + 1);
       if (x < 850){
-        x += 250;
+        x += 450;
       }
     }
     //choose a random number for fence image
@@ -104,10 +100,9 @@ export default class Game{
   }
 
   removeObstacles() {
-    //if an obstacle has gone off screen - remove
-    if (this.obstacles.length >= 3){
-      if (this.obstacles[0].x < -150){
-        console.log("remove!");
+    //if an obstacle has gone off screen - remove count down to game end
+    if (this.obstacles.length >= 1 || this.fencesToGo < 3){
+      if (this.obstacles[0].x < -450){
         this.obstacles.shift();
         this.fencesToGo -= 1;
       }
@@ -129,9 +124,17 @@ export default class Game{
     }
   }
 
+  bringUpHouse(){
+    const houseSprite = new Image();
+    houseSprite.onload= () => {
+    this.ctx.drawImage(houseSprite, 650, 120, 500, 500);
+    };
+    houseSprite.src = "src/images/houseSprite.png";
+
+  }
 
   won() {
-    if ( this.fencesToGo <= 0){
+    if ( this.fencesToGo === 0){
       this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
       const houseSprite = new Image();
       houseSprite.onload= () => {
