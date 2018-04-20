@@ -7,12 +7,17 @@
 
 body{
   background-color: rgba(31, 167, 235, 0.19);
+  margin-bottom: 10px;
+}
+
+#next{
+  color: black;
 }
 
 .gametitle{
   font-family: 'Press Start 2P', cursive;
   text-align: center;
-  margin-top: 8%;
+  margin-top: 1%;
 }
 
 .gamemain{
@@ -24,14 +29,29 @@ body{
 
 .story{
   font-family: 'Press Start 2P', cursive;
-  width: 200px;
+  width: 330px;
   line-height: 2;
-  margin-right: 1%;
+  margin-right: 3%;
 }
 
+#nextSong{
+  background-color: #3C7AFC;
+  border: none;
+  color: white;
+  padding: 11px;
+  position: absolute;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+#nextSong:focus{
+  outline: none;
+}
 .navlinks{
   padding: 10px;
   margin-left: 1%;
+  display: flex;
+  justify-content: center;
 }
 
 a{

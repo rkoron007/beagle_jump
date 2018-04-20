@@ -201,6 +201,6 @@ export default class Game{
 }
 
 
-Game.FENCES_TO_WIN = 3;
+Game.FENCES_TO_WIN = 10;
 Game.DIM_X = 800;
 Game.DIM_Y = 600;
