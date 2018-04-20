@@ -8,8 +8,12 @@ The game centers around timing your jumps correctly to avoid obstacles.
 ![Start Screen](https://media.giphy.com/media/20IB5CvqMveCZ1mw8V/giphy.gif)
 
 ### Possible Endings
-Beagle Jump features two seperate game endings based on game through the game or not
+Beagle Jump features two seperate game endings based whether a player is able to reach the end of the game or not. Though our beagle hero jumps over fences, sheep, and flames I wanted to keep the gameover light.
 ![GameOver](https://i.imgur.com/SfuNv1s.png)
+
+The beagle can't even look at you! It really makes you want to play gain right?
+The Victory Screen shows Max at home....but you know you want to play again! So there is a start button there just for you.
+
 ![Winner](https://i.imgur.com/F7SpDZG.png)
 
 ### Jumping Fun!
@@ -46,8 +50,43 @@ Dog.prototype.draw = function(context){
 
 ```
 
+### Music Makes a Game
+I really wanted some peppy 8-bit inspired songs as the background for this game.
+
+``` Javascript
+//find a random number for our next song-> but make sure its before we click
+let songNum = Math.floor((Math.random() * 4) + 1);
+
+document.getElementById("nextSong").addEventListener("click", () => {
+  //all the in game songs.
+  const songs = {
+    1: "src/music/katamari.mp3",
+    2: "src/music/animalcrossing.mp3",
+    3: "src/music/gin.mp3",
+    4: "src/music/zelda.mp3"
+  }
+
+  //find our audio tag
+  let nextAudio = document.getElementById('gamemusic');
+
+  // Now here is the fun part- make sure our current song isn't equal to the last song we played.
+  let songNum2 = Math.floor((Math.random() * 4) + 1);
+
+  while (songNum === songNum2){
+    songNum2 = Math.floor((Math.random() * 4) + 1);
+  }
+
+  // Then we go ahead and play our new song
+  songNum = songNum2;
+  nextAudio.src = songs[songNum2];
+  nextAudio.load();
+  nextAudio.play();
+})
+
+```
+
 ### Future features
  * There will be life system in game (each play through you start with 1 extra life to get to the end of the level. If you lose that extra life and then collide with something the game will be over)
- * Create in game item that makes you invincible for a short amount time.
- * Create in game item that gives you an extra life.
- * Create a difficulty setting that will give you more obstacles/bigger obstacles
+* With the life system I'll need in game item that gives you an extra  life.
+ * I want to create in game item that makes you invincible for a short amount time and has cool sound effect or special effect.
+ * For the future I think it'd be super fun to make a difficulty setting that will give you more obstacles/bigger obstacles
