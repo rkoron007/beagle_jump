@@ -43,11 +43,11 @@
             while (songNum === songNum2){
               songNum2 = Math.floor((Math.random() * 4) + 1);
             }
-
             songNum = songNum2;
             nextAudio.src = songs[songNum2];
             nextAudio.load();
             nextAudio.play();
+            document.getElementById("nextSong").blur();
           })
           </script>
       </div>
