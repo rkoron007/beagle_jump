@@ -14,7 +14,7 @@ Beagle Jump features two seperate game endings based whether a player is able to
 Though our beagle hero jumps over fences, sheep, and flames I wanted to keep the gameover light.
 ![GameOver](https://i.imgur.com/SfuNv1s.png)
 
-The beagle can't even look at you! It really makes you want to play gain right?
+The beagle can't even look at you! It really makes you want to play again right?
 
 #### Winner
 The Victory Screen shows Max at home....but you know you want to play again! So there is a start button there just for you.
