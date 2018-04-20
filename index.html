@@ -3,11 +3,34 @@
  <title>Beagle Jump!</title>
   <link rel="stylesheet" href="src/stylesheets/style.css">
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-  <script>
-  //add element to play random song on load
-  </script>
-  <audio id="test" controls="controls" src="src/music/katamari.mp3"
-   loop="loop" volume=".3"></audio>
+  <audio id="gamemusic" controls="controls" src="src/music/katamari.mp3"
+   loop="loop" volume=".3" autoplay></audio>
+    <button id="nextSong">Change songs</button>
+    <script>
+    let songNum = Math.floor((Math.random() * 4) + 1);
+    document.getElementById("nextSong").addEventListener("click", () => {
+      const songs = {
+        1: "src/music/katamari.mp3",
+        2: "src/music/animalcrossing.mp3",
+        3: "src/music/gin.mp3",
+        4: "src/music/zelda.mp3"
+      }
+      console.log(songNum);
+      let nextAudio = document.getElementById('gamemusic');
+      let songNum2 = Math.floor((Math.random() * 4) + 1);
+
+      while (songNum === songNum2){
+        songNum2 = Math.floor((Math.random() * 4) + 1);
+      }
+
+      songNum = songNum2;
+      nextAudio.src = songs[songNum2];
+      nextAudio.load();
+      nextAudio.play();
+    })
+    </script>
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  </head>
  <body>
