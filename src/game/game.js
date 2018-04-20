@@ -86,7 +86,7 @@ export default class Game{
 
     if (this.obstacles.length >= 1) {
       // if have obstacle make sure they are a good distance apart
-      let y = Math.floor((Math.random() * 400) + 1) + 250;
+      let y = Math.floor((Math.random() * 400) + 1) + 350;
       x = this.obstacles[this.obstacles.length - 1].x + y;
     } else {
       x = Math.floor((Math.random() * 1000) + 1);
