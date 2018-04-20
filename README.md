@@ -5,7 +5,7 @@
 Help Max the Beagle find his way home in this fun Javascript game. Max the Beagle will be jumping over all sorts of obstacles just trying to find his way home.
 
 The game centers around timing your jumps correctly to avoid obstacles.
-![Start Screen](https://media.giphy.com/media/20IB5CvqMveCZ1mw8V/giphy.gif)
+![Start Screen](https://media.giphy.com/media/3gYYvB85lXxTgTCE1G/giphy.gif)
 
 ### Possible Endings
 Beagle Jump features two seperate game endings based whether a player is able to reach the end of the game or not.
