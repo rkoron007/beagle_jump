@@ -16,7 +16,6 @@ import MovingObject from "./movingobject.js";
        this.height = this.spriteHeight/this.rows;
        this.curFrame = 0;
        this.frameCount = 4;
-
        this.jumping = false;
        this.jumpFrame = 13;
        this.y_velocity = 0;

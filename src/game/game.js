@@ -1,5 +1,6 @@
 import Dog from "./dog";
 import Obstacle from "./obstacle";
+import House from "./house";
 
 export default class Game{
   constructor(ctx){
@@ -11,7 +12,6 @@ export default class Game{
     this.spacePressed = false;
     this.fencesToGo = Game.FENCES_TO_WIN;
     this.set = null;
-    this.frameRate = 10;
 
     this.loadCycle = this.loadCycle.bind(this);
   }
@@ -35,7 +35,7 @@ export default class Game{
   checkObstacles(){
     if (this.fencesToGo === 1) {
       this.removeObstacles();
-      return this.bringUpHouse();
+      this.bringUpHouse();
     } else if (this.obstacles.length < 3 && this.fencesToGo > 1)
       { this.addObstacles(); }
       this.removeObstacles();
@@ -60,11 +60,13 @@ export default class Game{
    if (object instanceof Obstacle) {
       this.obstacles.push(object);
     }
+   if (object instanceof House) {
+      this.house.push(object);
+    }
   }
 
   draw(ctx) {
     this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-
     this.allObjects().forEach((object) => {
       object.draw(ctx);
     });
@@ -102,7 +104,7 @@ export default class Game{
   removeObstacles() {
     //if an obstacle has gone off screen - remove count down to game end
     if (this.obstacles.length >= 1 || this.fencesToGo < 3){
-      if (this.obstacles[0].x < -450){
+      if (this.obstacles[0].x < -650){
         this.obstacles.shift();
         this.fencesToGo -= 1;
       }
@@ -110,7 +112,7 @@ export default class Game{
   }
 
   allObjects() {
-    return [].concat(this.dog, this.obstacles);
+    return [].concat(this.dog, this.obstacles, this.house);
   }
 
   checkCollisions() {
@@ -125,17 +127,20 @@ export default class Game{
   }
 
   bringUpHouse(){
-    const houseSprite = new Image();
-    houseSprite.onload= () => {
-    this.ctx.drawImage(houseSprite, 650, 120, 500, 500);
-    };
-    houseSprite.src = "src/images/houseSprite.png";
-
+    if (this.house.length < 1){
+      this.add(new House());
+    }
+    // const houseSprite = new Image();
+    // houseSprite.onload= () => {
+    // this.ctx.drawImage(houseSprite, 650, 120, 500, 500);
+    // };
+    // houseSprite.src = "src/images/houseSprite.png";
   }
 
   won() {
     if ( this.fencesToGo === 0){
       this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+      this.house = [];
       const houseSprite = new Image();
       houseSprite.onload= () => {
       this.ctx.drawImage(houseSprite, 500, 120, 500, 500);
@@ -189,6 +194,7 @@ export default class Game{
     gameOverSprite.src = "src/images/gameover.png";
 
     this.ctx.canvas.addEventListener('click', this.loadCycle);
+    this.house = [];
     this.fencesToGo = Game.FENCES_TO_WIN;
     clearInterval(this.set);
   }
