@@ -1,5 +1,7 @@
 # Beagle Jump! - a game about a dog finding way his home.
 
+[Live Demo](https://rkoron007.github.io/beagle_jump/)
+
 ### Background and Overview
 
 Help Max the Beagle find his way home in this fun Javascript game. Max the Beagle will be jumping over all sorts of obstacles just trying to find his way home.
