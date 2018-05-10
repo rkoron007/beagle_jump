@@ -48,7 +48,7 @@ import MovingObject from "./movingobject.js";
   Dog.prototype.jump = function(){
     this.jumping = true;
     this.jumpFrame = 13;
-    this.y -= 35;
+    this.y -= 30;
   };
 
   Dog.prototype.draw = function(context){

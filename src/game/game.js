@@ -11,7 +11,12 @@ export default class Game{
     this.ctx = ctx;
     this.spacePressed = false;
     this.fencesToGo = Game.FENCES_TO_WIN;
-    this.set = null;
+
+    //set the frames per second
+    this.then = 0;
+    this.fps = 10;
+    this.fpsInterval = 700 / this.fps;
+    this.animationFrame = null;
 
     this.loadCycle = this.loadCycle.bind(this);
   }
@@ -28,7 +33,7 @@ export default class Game{
 
   start() {
     this.finished = false;
-    this.set = setInterval(() => this.frame(), 80);
+    requestAnimationFrame(this.frame.bind(this));
   }
 
 
@@ -42,6 +47,8 @@ export default class Game{
   }
 
   frame(){
+    this.animationFrame = requestAnimationFrame(this.frame.bind(this));
+
     //if game is finished handle
     if (this.fencesToGo <= 0){
       this.won();
@@ -50,10 +57,16 @@ export default class Game{
         this.gameOver();
         return false;
       }
-    this.checkObstacles();
-    this.checkCollisions();
-    this.checkJumps();
-    this.draw(this.ctx);
+      const now = Date.now();
+      const timeDelta = now - this.then;
+
+      if (timeDelta > this.fpsInterval) {
+        this.then = now - (timeDelta % this.fpsInterval);
+        this.checkObstacles();
+        this.checkCollisions();
+        this.checkJumps();
+        this.draw(this.ctx);
+      }
   }
 
   add(object) {
@@ -130,15 +143,15 @@ export default class Game{
     if (this.house.length < 1){
       this.add(new House());
     }
-    // const houseSprite = new Image();
-    // houseSprite.onload= () => {
-    // this.ctx.drawImage(houseSprite, 650, 120, 500, 500);
-    // };
-    // houseSprite.src = "src/images/houseSprite.png";
+  }
+
+  clearObstacles(){
+    this.obstacles = [];
   }
 
   won() {
     if ( this.fencesToGo === 0){
+      cancelAnimationFrame(this.animationFrame);
       this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
       this.house = [];
       const houseSprite = new Image();
@@ -167,8 +180,9 @@ export default class Game{
       winSprite.src = "src/images/winSprite.png";
 
       this.finished = true;
+      this.clearObstacles();
       this.fencesToGo = Game.FENCES_TO_WIN;
-      clearInterval(this.set);
+      // clearInterval(this.set);
       this.ctx.canvas.addEventListener('click', this.loadCycle);
     } else {
       this.finished = false;
@@ -176,8 +190,8 @@ export default class Game{
   }
 
   gameOver(){
+    cancelAnimationFrame(this.animationFrame);
     this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-
     this.startSprite();
 
     const gameOverSprite = new Image();
@@ -193,10 +207,11 @@ export default class Game{
     sadDogSprite.src = "src/images/dog gameover.png";
     gameOverSprite.src = "src/images/gameover.png";
 
+    this.clearObstacles();
     this.ctx.canvas.addEventListener('click', this.loadCycle);
     this.house = [];
     this.fencesToGo = Game.FENCES_TO_WIN;
-    clearInterval(this.set);
+    // clearInterval(this.set);
   }
 
   checkJumps(){
@@ -210,6 +225,6 @@ export default class Game{
 }
 
 
-Game.FENCES_TO_WIN = 10;
+Game.FENCES_TO_WIN = 3;
 Game.DIM_X = 800;
 Game.DIM_Y = 600;

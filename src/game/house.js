@@ -1,6 +1,6 @@
 export default class House{
   constructor(){
-    this.x = 700;
+    this.x = 1000;
     this.y = 120;
     this.houseSprite = new Image();
     this.houseSprite.src = "src/images/houseSprite.png";
