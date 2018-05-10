@@ -87,7 +87,7 @@ export default class Game{
 
   startSprite(){
     const startSprite = new Image();
-    startSprite.onload= () => {
+    startSprite.onload = () => {
       this.ctx.drawImage(startSprite, 300, 250, 200, 100);
     };
     startSprite.src = "src/images/start.png";
@@ -101,7 +101,7 @@ export default class Game{
 
     if (this.obstacles.length >= 1) {
       // if have obstacle make sure they are a good distance apart
-      let y = Math.floor((Math.random() * 400) + 1) + 350;
+      let y = Math.floor((Math.random() * 400)) + 452;
       x = this.obstacles[this.obstacles.length - 1].x + y;
     } else {
       x = Math.floor((Math.random() * 1000) + 1);
@@ -182,7 +182,6 @@ export default class Game{
       this.finished = true;
       this.clearObstacles();
       this.fencesToGo = Game.FENCES_TO_WIN;
-      // clearInterval(this.set);
       this.ctx.canvas.addEventListener('click', this.loadCycle);
     } else {
       this.finished = false;
@@ -211,7 +210,6 @@ export default class Game{
     this.ctx.canvas.addEventListener('click', this.loadCycle);
     this.house = [];
     this.fencesToGo = Game.FENCES_TO_WIN;
-    // clearInterval(this.set);
   }
 
   checkJumps(){
