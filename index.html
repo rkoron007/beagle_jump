@@ -1,71 +1,21 @@
 <html>
  <head>
  <title>Beagle Jump!</title>
-  <link rel="stylesheet" href="src/stylesheets/reset.css">
-  <link rel="stylesheet" href="src/stylesheets/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<link rel="icon"
-type="image/png"
-href="./src/images/heart1.png">
+  <link rel="stylesheet" href="style.css">
+  <h1>Beagle Jump!</h1>
+  <p>Max the Beagle got lost tryint to find his way home! Only you can help Max get home.</p>
  </head>
  <body>
-    <div class="gametitle">
-      <h1>Beagle Jump!</h1>
-    </div>
-
-    <div class="gamemain">
-      <div class="story">
-        <p>Max went out adventuring last night and got lost! He is trying to get home but all these short fences keep getting in the way. Can you help Max navigate the small fences and find his way home?!</p>
-        <nav class="navlinks">
-          <a href="https://github.com/rkoron007/beagle_jump"><i class="fa fa-github fa-3x" id ="next" aria-hidden="true"></i></a>
-
-          <a href="https://www.linkedin.com/in/rose-koron/"><i class="fa fa-linkedin fa-3x" id ="next" aria-hidden="true"></i></a>
-
-          <a href="https://angel.co/rose-m-koron?public_profile=1"><i class="fa fa-angellist fa-3x" id ="next" aria-hidden="true"></i></a>
-        </nav>
-        <!-- audio player -->
-        <audio id="gamemusic" controls src="src/music/katamari.mp3"
-       loop="loop"></audio>
-
-        <button id="nextSong" class="nextSongbtn"><i class="fa fa-step-forward" aria-hidden="true" color="black"></i></button>
-          <script>
-          // find a new random song that is not the current song
-          let songNum = Math.floor((Math.random() * 4) + 1);
-          document.getElementById("nextSong").addEventListener("click", () => {
-            const songs = {
-              1: "src/music/katamari.mp3",
-              2: "src/music/animalcrossing.mp3",
-              3: "src/music/gin.mp3",
-              4: "src/music/zelda.mp3"
-            }
-            let nextAudio = document.getElementById('gamemusic');
-            let songNum2 = Math.floor((Math.random() * 4) + 1);
-
-            while (songNum === songNum2){
-              songNum2 = Math.floor((Math.random() * 4) + 1);
-            }
-            songNum = songNum2;
-            nextAudio.src = songs[songNum2];
-            nextAudio.load();
-            nextAudio.play();
-            document.getElementById("nextSong").blur();
-          })
-          </script>
-      </div>
-
-      <div class="game">
+ <canvas id='game'></canvas>
 
 
-        <canvas id="game" height="600" width="800"></canvas>
-        <p class="rules">Press Space to Jump</p>
-      </div>
-    </div>
+<script type="text/javascript" src="lib/bundle.js">
+</script>
 
 
-  <script type="text/javascript" src="lib/bundle.js">
-  </script>
+ <script src="utility.js"></script>
+ <script src="background.js"></script>
+  <script src="dog.js"></script>
+  <script src="obstruction.js"></script>
  </body>
 </html>
