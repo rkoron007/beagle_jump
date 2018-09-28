@@ -1,19 +1,21 @@
-import MovingObject from "./movingobject";
+import MovingObject from "./movingobject.js";
 
 export default class Obstacle extends MovingObject{
-  constructor(x, imageNum){
+  constructor(x,y, imageNum){
     super();
     this.x = x;
-    this.y = 470;
-    this.height = 100;
-    this.width = 100;
+ 
+	this.y = y/1.30;
+	
+    this.height =y/4.95;//orig 100
+    this.width = y/1.87;//orig 100
     this.obstacleSprite = new Image();
     this.obstacleSprite.src = Obstacle.OBSTACLE_IMAGES[imageNum];
   }
 
   draw(ctx){
     this.x -= 15;
-    ctx.drawImage(this.obstacleSprite,this.x,this.y, 110, 110);
+    ctx.drawImage(this.obstacleSprite,this.x,this.y, this.width,this.height);//orig 110 110
   }
 
 }

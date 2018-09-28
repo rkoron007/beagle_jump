@@ -1,23 +1,29 @@
-import Game from "./src/game/game";
-import GameView from "./src/game/gameview";
+import Game from "./src/game/game.js";
 
 
-import Dog from "./src/game/dog";
-import MovingObject from "./src/game/movingobject";
-import Obstacle from "./src/game/obstacle";
-import Utility from "./src/game/utility";
+
+import Dog from "./src/game/dog.js";
+import MovingObject from "./src/game/movingobject.js";
+import Obstacle from "./src/game/obstacle.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const canvasEl = document.getElementById("game");
   const ctx = canvasEl.getContext("2d");
-  const game = new Game(ctx);
-
+  var width = canvasEl.width;
+	var height = canvasEl.height;
+ 
+  const game = new Game(ctx,width,height);
+	
 
   initListeners(game);
   game.loadGame();
+  	
+
 });
 
 function initListeners(game){
+	
   const keyDownHandler = (e)=>{
     if(e.keyCode === 32) {
       game.spacePressed = true;
