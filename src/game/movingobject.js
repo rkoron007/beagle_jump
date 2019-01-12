@@ -1,17 +1,18 @@
-export default class MovingObject{
-  constructor(x,y,h,w){
+export default class MovingObject {
+  constructor(x, y, h, w) {
     this.x = x;
     this.y = y;
     this.height = h;
     this.width = w;
   }
 
-  collidedWith(shape){
+  collidedWith(shape) {
+
     let minheight = (this.dogSizeY + shape.height) / 2;
-    
-    if ((this.dogSizeX > (shape.x - 20)) && ((this.y - minheight) >= 40) && (shape.x > 150)){//295
-        return true;
-      } else
+
+    if ((this.dogSizeX > (shape.x - 25)) && ((shape.y - minheight) >= 60) && (shape.x > 100)) {//295
+      return true;
+    } else
       return false;
   }
 }

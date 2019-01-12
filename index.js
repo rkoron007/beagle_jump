@@ -11,28 +11,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvasEl = document.getElementById("game");
   const ctx = canvasEl.getContext("2d");
   var width = canvasEl.width;
-	var height = canvasEl.height;
- 
-  const game = new Game(ctx,width,height);
-	
+  var height = canvasEl.height;
+
+  const game = new Game(ctx, width, height);
+
 
   initListeners(game);
   game.loadGame();
-  	
+
 
 });
 
-function initListeners(game){
-	
-  const keyDownHandler = (e)=>{
-    if(e.keyCode === 32) {
+function initListeners(game) {
+
+  const keyDownHandler = (e) => {
+    if (e.keyCode === 32) {
       game.spacePressed = true;
     }
   };
 
   const keyUpHandler = (e) => {
-    if(e.keyCode === 32) {
-        game.spacePressed = false;
+    if (e.keyCode === 32) {
+      game.spacePressed = false;
     }
   };
 
