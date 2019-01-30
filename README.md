@@ -1,6 +1,6 @@
 # Beagle Jump! - a game about a dog finding way his home.
 
-[Live Demo](https://rkoron007.github.io/beagle_jump/)
+[Live Demo](https://spectral369.github.io/beagle_jump/)
 
 ### Background and Overview
 

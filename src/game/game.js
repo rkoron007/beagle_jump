@@ -1,12 +1,13 @@
-import Dog from "./dog";
-import Obstacle from "./obstacle";
-import House from "./house";
+import Dog from "./dog.js";
+import Obstacle from "./obstacle.js";
+import House from "./house.js";
 
-export default class Game{
-  constructor(ctx){
+export default class Game {
+
+  constructor(ctx, width, height) {
     this.obstacles = [];
     this.house = [];
-    this.dog = new Dog();
+    this.dog = new Dog(width, height);
     this.finished = false;
     this.ctx = ctx;
     this.spacePressed = false;
@@ -17,8 +18,11 @@ export default class Game{
     this.fps = 10;
     this.fpsInterval = 700 / this.fps;
     this.animationFrame = null;
+    this.width = width;
+    this.height = height;
 
     this.loadCycle = this.loadCycle.bind(this);
+
   }
 
   loadGame() {
@@ -26,7 +30,7 @@ export default class Game{
     this.ctx.canvas.addEventListener('click', this.loadCycle);
   }
 
-  loadCycle(){
+  loadCycle() {
     this.start();
     this.ctx.canvas.removeEventListener('click', this.loadCycle);
   }
@@ -37,87 +41,93 @@ export default class Game{
   }
 
 
-  checkObstacles(){
+  checkObstacles() {
     if (this.fencesToGo === 1) {
       this.removeObstacles();
       this.bringUpHouse();
-    } else if (this.obstacles.length < 3 && this.fencesToGo > 1)
-      { this.addObstacles(); }
-      this.removeObstacles();
+    } else if (this.obstacles.length < 3 && this.fencesToGo > 1) { this.addObstacles(); }
+    this.removeObstacles();
   }
 
-  frame(){
+  frame() {
     this.animationFrame = requestAnimationFrame(this.frame.bind(this));
 
     //if game is finished handle
-    if (this.fencesToGo <= 0){
+    if (this.fencesToGo <= 0) {
       this.won();
       return true;
     } else if (this.finished === true) {
-        this.gameOver();
-        return false;
-      }
-      const now = Date.now();
-      const timeDelta = now - this.then;
+      this.gameOver();
+      return false;
+    }
+    const now = Date.now();
+    const timeDelta = now - this.then;
 
-      if (timeDelta > this.fpsInterval) {
-        this.then = now - (timeDelta % this.fpsInterval);
-        this.checkObstacles();
-        this.checkCollisions();
-        this.checkJumps();
-        this.draw(this.ctx);
-      }
+    if (timeDelta > this.fpsInterval) {
+      this.then = now - (timeDelta % this.fpsInterval);
+      this.checkObstacles();
+      this.checkCollisions();
+      this.checkJumps();
+      this.draw(this.ctx);
+    }
   }
 
   add(object) {
-   if (object instanceof Obstacle) {
+    if (object instanceof Obstacle) {
       this.obstacles.push(object);
     }
-   if (object instanceof House) {
+    if (object instanceof House) {
       this.house.push(object);
     }
   }
 
   draw(ctx) {
-    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+
+    this.ctx.clearRect(0, 0, this.width, this.height);
     this.allObjects().forEach((object) => {
       object.draw(ctx);
     });
   }
 
-  startSprite(){
+  startSprite() {
+
     const startSprite = new Image();
     startSprite.onload = () => {
-      this.ctx.drawImage(startSprite, 300, 250, 200, 100);
+
+      this.ctx.drawImage(startSprite, this.width / 2.3, this.height / 5, this.width / 5, this.height / 6);
+
     };
-    startSprite.src = "src/images/start.png";
+    startSprite.src = "./src/images/start.png";
   }
 
   addObstacles() {
     //if won -> don't add obstacles
-    if ( this.fencesToGo <= 0){ return this.won();}
+    if (this.fencesToGo <= 0) { return this.won(); }
     //create a random spot for the fence but make sure it's big enough
     let x;
-
     if (this.obstacles.length >= 1) {
       // if have obstacle make sure they are a good distance apart
-      let y = Math.floor((Math.random() * 400)) + 452;
+
+      let y = Math.floor((Math.random() * this.width * 1.32)) + this.width * 1.22;
       x = this.obstacles[this.obstacles.length - 1].x + y;
     } else {
-      x = Math.floor((Math.random() * 1000) + 1);
-      if (x < 850){
-        x += 450;
+
+      x = Math.floor((Math.random() * this.width * 3) + 1);
+
+      if (x < this.width * 2.84) {
+        x += this.width * 1.45;
       }
     }
     //choose a random number for fence image
     let imageNum = Math.floor((Math.random() * 7) + 1);
-    this.add(new Obstacle(x, imageNum));
+
+    this.add(new Obstacle(x, this.height, imageNum));
   }
 
   removeObstacles() {
     //if an obstacle has gone off screen - remove count down to game end
-    if (this.obstacles.length >= 1 || this.fencesToGo < 3){
-      if (this.obstacles[0].x < -650){
+    if (this.obstacles.length >= 1 || this.fencesToGo < 3) {
+      if (this.obstacles[0].x < - this.width / 1.3) {
         this.obstacles.shift();
         this.fencesToGo -= 1;
       }
@@ -129,55 +139,65 @@ export default class Game{
   }
 
   checkCollisions() {
+
     for (let i = 0; i < this.obstacles.length; i++) {
       const obj1 = this.dog;
       const obj2 = this.obstacles[i];
-      if (obj1.collidedWith(obj2)) {
+      //old
+      /*if (obj1.collidedWith(obj2)) {
+        this.obstacles = [];
+        this.finished = true;
+      }*/
+      //new
+      if (collideTest(obj1, obj2)) {
         this.obstacles = [];
         this.finished = true;
       }
     }
   }
 
-  bringUpHouse(){
-    if (this.house.length < 1){
+  bringUpHouse() {
+    if (this.house.length < 1) {
       this.add(new House());
     }
   }
 
-  clearObstacles(){
+  clearObstacles() {
     this.obstacles = [];
   }
 
   won() {
-    if ( this.fencesToGo === 0){
+    if (this.fencesToGo === 0) {
       cancelAnimationFrame(this.animationFrame);
-      this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+      this.ctx.clearRect(0, 0, this.width, this.height);
       this.house = [];
       const houseSprite = new Image();
-      houseSprite.onload= () => {
-      this.ctx.drawImage(houseSprite, 500, 120, 500, 500);
-    };
+      houseSprite.onload = () => {
+        this.ctx.drawImage(houseSprite, this.width / 1.37, this.height / 3, this.width / 3, this.height / 1.46);
+
+      };
 
       const winDogSprite = new Image();
-      winDogSprite.onload= () => {
-      this.ctx.drawImage(winDogSprite, 20, 390, 150,150);
+      winDogSprite.onload = () => {
+
+        this.ctx.drawImage(winDogSprite, this.width / 1.46, this.height / 1.30, this.width / 6, this.height / 5);//50 30
       };
 
       const winSprite = new Image();
-      winSprite.onload= () => {
-        this.ctx.drawImage(winSprite, 240, 0, 300,300);
+      winSprite.onload = () => {
+
+        this.ctx.drawImage(winSprite, this.width / 12, this.height / 2.8, this.width / 2, this.height / 3);
       };
 
       const startSprite = new Image();
-      startSprite.onload= () => {
-        this.ctx.drawImage(startSprite, 280, 350, 200,100);
+      startSprite.onload = () => {
+        this.ctx.drawImage(startSprite, this.width / 5, this.height / 5, this.width / 5, this.height / 6);
       };
 
-      startSprite.src = "src/images/start.png";
-      winDogSprite.src = "src/images/dogWin.png";
-      houseSprite.src = "src/images/houseSprite.png";
-      winSprite.src = "src/images/winSprite.png";
+      startSprite.src = "./src/images/start.png";
+      winDogSprite.src = "./src/images/dogWin.png";
+      houseSprite.src = "./src/images/houseSprite.png";
+      winSprite.src = "./src/images/winSprite.png";
 
       this.finished = true;
       this.clearObstacles();
@@ -188,23 +208,24 @@ export default class Game{
     }
   }
 
-  gameOver(){
+  gameOver() {
     cancelAnimationFrame(this.animationFrame);
-    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+    this.ctx.clearRect(0, 0, this.width, this.height);
     this.startSprite();
 
     const gameOverSprite = new Image();
-    gameOverSprite.onload= () => {
-      this.ctx.drawImage(gameOverSprite, 300, 80, 200,100);
+    gameOverSprite.onload = () => {
+      this.ctx.drawImage(gameOverSprite, this.width / 2.3, this.height / 2.8, this.width / 5, this.height / 6);
     };
 
     const sadDogSprite = new Image();
-    sadDogSprite.onload= () => {
-      this.ctx.drawImage(sadDogSprite, 20, 360, 200,200);
+    sadDogSprite.onload = () => {
+
+      this.ctx.drawImage(sadDogSprite, this.width / 2.3, this.height / 1.37, this.width / 5, this.height / 6);
     };
 
-    sadDogSprite.src = "src/images/dog gameover.png";
-    gameOverSprite.src = "src/images/gameover.png";
+    sadDogSprite.src = "./src/images/dog gameover.png";
+    gameOverSprite.src = "./src/images/gameover.png";
 
     this.clearObstacles();
     this.ctx.canvas.addEventListener('click', this.loadCycle);
@@ -212,14 +233,22 @@ export default class Game{
     this.fencesToGo = Game.FENCES_TO_WIN;
   }
 
-  checkJumps(){
+  checkJumps() {
     if (this.spacePressed && this.dog.jumping === false) {
       this.dog.jump();
     }
-    if (this.dog.jumping === true){
+    if (this.dog.jumping === true) {
       this.dog.animateJump();
     }
   }
+}
+
+//new better func
+function collideTest(obiect1, obiect2) {
+  if ((obiect1.x > (obiect2.x - 25)) && (obiect2.y - obiect1.y) < 20 && (obiect2.x > 30)) {
+    return true;
+  } else
+    return false;
 }
 
 
