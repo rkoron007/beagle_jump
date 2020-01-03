@@ -10,10 +10,10 @@ The game centers around timing your jumps correctly to avoid obstacles.
 ![Start Screen](https://media.giphy.com/media/3gYYvB85lXxTgTCE1G/giphy.gif)
 
 ### Possible Endings
-Beagle Jump features two seperate game endings based whether a player is able to reach the end of the game or not.
+Beagle Jump features two separate game endings based whether a player is able to reach the end of the game or not.
 
 #### GameOver
-Though our beagle hero jumps over fences, sheep, and flames I wanted to keep the gameover light.
+Though our beagle hero jumps over fences, sheep, and flames I wanted to keep the game over light.
 ![GameOver](https://i.imgur.com/SfuNv1s.png)
 
 The beagle can't even look at you! It really makes you want to play again right?

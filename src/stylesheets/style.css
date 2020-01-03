@@ -1,51 +1,51 @@
-#game{
+#game {
   background-image: url("https://i.pinimg.com/originals/77/d5/89/77d5892879682be6d71f83ff5eda71b4.jpg");
   background-size: 1000px 600px;
   display: flex;
   justify-content: center;
 }
 
-body{
-  font-family: 'Press Start 2P', cursive;
+body {
+  font-family: "Press Start 2P", cursive;
   background-color: rgba(31, 167, 235, 0.19);
   margin-bottom: 10px;
 }
 
-#next{
+#next {
   color: black;
 }
 
-.gametitle{
+.gametitle {
   text-align: center;
   margin-top: 1%;
 }
 
-.gamemain{
+.gamemain {
   display: flex;
   width: 100%;
   margin-top: 1em;
   justify-content: center;
 }
 
-p{
+p {
   margin-left: 15px;
 }
 
-.rules{
+.rules {
   text-align: center;
   margin-top: 40px;
   line-height: 2;
   font-size: 18px;
 }
 
-.story{
+.story {
   width: 330px;
   line-height: 2;
   margin-right: 3%;
 }
 
-#nextSong{
-  background-color: #3C7AFC;
+#nextSong {
+  background-color: #3c7afc;
   border: none;
   color: white;
   padding: 11px;
@@ -54,11 +54,11 @@ p{
   border-bottom-right-radius: 3px;
 }
 
-#nextSong:focus{
+#nextSong:focus {
   outline: none;
 }
 
-.navlinks{
+.navlinks {
   padding: 10px;
   margin-left: 1%;
   display: flex;
@@ -66,7 +66,7 @@ p{
   margin-bottom: 2%;
 }
 
-a{
+a {
   padding: 10px;
   margin-right: 10%;
 }

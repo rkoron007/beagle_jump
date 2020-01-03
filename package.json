@@ -5,7 +5,8 @@
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --watch"
+    "webpack": "webpack --watch",
+    "start": "webpack"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
+    "http-server": "^0.12.0",
     "webfontloader": "^1.6.28",
     "webpack": "^3.10.0"
   }
